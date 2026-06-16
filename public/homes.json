@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Golden Nest",
+    "photo": "https://i.ibb.co.com/pG1mjnz/Golden-Nest.jpg",
+    "shortDescription": "Cozy Luxury",
+    "price": "$120,000"
+  },
+  {
+    "name": "Imperial Golden Residence",
+    "photo": "https://i.ibb.co.com/hRCr8PLG/Imperial-Golden-Residence.jpg",
+    "shortDescription": "Royal Luxury",
+    "price": "$250,000"
+  },
+  {
+    "name": "Azure Comfort Home",
+    "photo": "https://i.ibb.co.com/99n9g1Yn/Azure-Comfort-Home.jpg",
+    "shortDescription": "Calm & Minimal",
+    "price": "$180,000"
+  },
+  {
+    "name": "Urban Luxe Residence",
+    "photo": "https://i.ibb.co.com/bjF9gH83/Urban-Luxe-Residence.jpg",
+    "shortDescription": "Modern Luxury",
+    "price": "$220,000"
+  },
+  {
+    "name": "Mountain View Retreat",
+    "photo": "https://i.ibb.co.com/8n5NWcHq/Mountain-View-Retreat.jpg",
+    "shortDescription": "Nature Escape",
+    "price": "$300,000"
+  },
+  {
+    "name": "Alpine Serenity Home",
+    "photo": "https://i.ibb.co.com/DPyPqZCp/Alpine-Serenity-Home.jpg",
+    "shortDescription": "Serene Nature",
+    "price": "$280,000"
+  },
+  {
+    "name": "Romance Haven Residence",
+    "photo": "https://i.ibb.co.com/4wQJX1rF/Romance-Haven-Residence.jpg",
+    "shortDescription": "Romantic",
+    "price": "$260,000"
+  },
+  {
+    "name": "CyberNest Home",
+    "photo": "https://i.ibb.co.com/7J2sByP4/Cyber-Nest-Home.jpg",
+    "shortDescription": "Futuristic Tech",
+    "price": "$350,000"
+  },
+  {
+    "name": "Orbit Luxury Residence",
+    "photo": "https://i.ibb.co.com/G4nCkdkW/Orbit-Luxury-Residence.jpg",
+    "shortDescription": "Unique Design",
+    "price": "$400,000"
+  },
+  {
+    "name": "Signature Home",
+    "photo": "https://i.ibb.co.com/MFgxKRn/Signature-Home.png",
+    "shortDescription": "Signature Premium",
+    "price": "$450,000"
+  },
+  {
+    "name": "Nature Bliss Residence",
+    "photo": "https://i.ibb.co.com/YB2nTBCk/Nature-Bliss-Residence.jpg",
+    "shortDescription": "Nature Inspired",
+    "price": "$240,000"
+  },
+  {
+    "name": "Regal Horizon Residence",
+    "photo": "https://i.ibb.co.com/MkLQDRpH/Regal-Horizon-Residence.jpg",
+    "shortDescription": "Scenic Royal",
+    "price": "$500,000"
+  },
+  {
+    "name": "Royal Residence",
+    "photo": "https://i.ibb.co.com/twhBNv9b/Royal-Residence.jpg",
+    "shortDescription": "Classic Royal",
+    "price": "$550,000"
+  },
+  {
+    "name": "Royal Sapphire Haven",
+    "photo": "https://i.ibb.co.com/mrhjDSxL/Royal-Sapphire-Haven.jpg",
+    "shortDescription": "Ultra Royal",
+    "price": "$650,000"
+  },
+  {
+    "name": "Amour Residence",
+    "photo": "https://i.ibb.co.com/yFtf3b5y/Amour-Residence.jpg",
+    "shortDescription": "Romantic Luxury",
+    "price": "$230,000"
+  },
+  {
+    "name": "Modern Haven",
+    "photo": "https://i.ibb.co.com/JwhQBjy7/Modern-Haven.jpg",
+    "shortDescription": "Modern Minimal",
+    "price": "$200,000"
+  },
+  {
+    "name": "Serenity House",
+    "photo": "https://i.ibb.co.com/23xKfjFx/Serenity-House.jpg",
+    "shortDescription": "Peaceful Retreat",
+    "price": "$210,000"
+  },
+  {
+    "name": "Elite Residence",
+    "photo": "https://i.ibb.co.com/ccQ5SVZC/Elite-Residence.jpg",
+    "shortDescription": "Elite Luxury",
+    "price": "$700,000"
+  },
+  {
+    "name": "Grand Vista Home",
+    "photo": "https://i.ibb.co.com/bgGPS3T3/Grand-Vista-Home.jpg",
+    "shortDescription": "Grand View Luxury",
+    "price": "$800,000"
+  },
+  {
+    "name": "Prestige Villa",
+    "photo": "https://i.ibb.co.com/39M03JD9/Prestige-Villa.jpg",
+    "shortDescription": "Ultra Prestige",
+    "price": "$900,000"
+  }
+]
