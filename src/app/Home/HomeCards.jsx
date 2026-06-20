@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import SeeDetailsButton from "../Components/Buttons/SeeDetailsButton";
 
 export default function HomeCards() {
   const [homes, setHomes] = useState([]);
@@ -123,7 +124,7 @@ export default function HomeCards() {
                       {home.price}
                     </span>
 
-                    <Link
+                    {/* <Link
                       href={`/homes/${index}`}
                       className="
                         px-4
@@ -144,7 +145,10 @@ export default function HomeCards() {
                       "
                     >
                       See Details
-                    </Link>
+                    </Link> */}
+
+                      <SeeDetailsButton id={home.id}></SeeDetailsButton>
+
 
                   </div>
 

@@ -46,7 +46,7 @@ export default function NavBarHm() {
           {/* Right Glow */}
           <div className="absolute inset-y-0 right-0 w-[60%] bg-gradient-to-l from-white/15 via-white/5 to-transparent pointer-events-none" />
 
-          {/* Logo */}
+          
           <Link href="/" className="relative z-10">
             <h1 className="text-[24px] font-bold tracking-wide">
               <span className="text-cyan-400">AURA</span>
@@ -54,7 +54,7 @@ export default function NavBarHm() {
             </h1>
           </Link>
 
-          {/* Desktop Menu */}
+          
           <div className="hidden md:flex items-center gap-10 ml-auto relative z-10">
 
             <div className="flex items-center gap-8">
@@ -124,7 +124,7 @@ export default function NavBarHm() {
 
           </div>
 
-          {/* Mobile Toggle */}
+          {/* Toggle */}
           <button
             onClick={() => setOpen(!open)}
             className="md:hidden text-cyan-300 relative z-10"
@@ -134,7 +134,7 @@ export default function NavBarHm() {
 
         </div>
 
-        {/* Mobile Menu */}
+        {/* Menu of phone */}
         <AnimatePresence>
           {open && (
             <motion.div
