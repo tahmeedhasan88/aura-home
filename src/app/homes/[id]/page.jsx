@@ -52,7 +52,7 @@ export default function HomeDetailsPage({ params }) {
   if (!home) {
     return (
       <section className="min-h-screen flex items-center justify-center bg-[#06141B]">
-        <h2 className="text-white text-2xl">Home Not Found</h2>
+        <h2 className="text-white text-2xl">Page Not Found...</h2>
       </section>
     );
   }
@@ -64,7 +64,7 @@ export default function HomeDetailsPage({ params }) {
       <div className="max-w-7xl mx-auto">
 
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.18)] p-6">
-          <div className="flex flex-col lg:flex-row lg:flex-nowrap gap-8 items-start detail-layout">
+          <div className="flex flex-col lg:flex-row lg:flex-nowrap gap-6 items-start detail-layout">
 
             <div className="w-full lg:flex-[0_0_65%] lg:w-auto min-w-0 space-y-6 detail-left">
               <div className="overflow-hidden rounded-[30px] border border-white/10 shadow-lg shadow-emerald-500/10">
@@ -141,12 +141,12 @@ export default function HomeDetailsPage({ params }) {
                   <div className="rounded-3xl bg-white/5 p-4 text-center border border-white/10">
                     <Ruler className="mx-auto h-5 w-5 text-emerald-300" />
                     <p className="mt-3 text-sm text-gray-300 truncate">Area</p>
-                    <p className="mt-2 text-[17px] font-semibold text-white">{home.squareFeet} sq ft</p>
+                    <p className="mt-2 text-[16px] font-semibold text-white">{home.squareFeet} sq ft</p>
                   </div>
                   <div className="rounded-3xl bg-white/5 p-4 text-center border border-white/10">
                     <Sparkles className="mx-auto h-5 w-5 text-emerald-300" />
                     <p className="mt-3 text-sm text-gray-300 truncate">Status</p>
-                    <p className="mt-2 text-[17px] font-semibold text-white">{home.status}</p>
+                    <p className="mt-2 text-[16px] font-semibold text-white">{home.status}</p>
                   </div>
                 </div>
               </div>
