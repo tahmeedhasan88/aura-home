@@ -11,6 +11,7 @@ import {
   CheckCircle2,
   ArrowLeft,
 } from "lucide-react";
+import UniversalNav from "@/app/Components/UniversalNav";
 
 export default function HomeDetailsPage({ params }) {
   const resolvedParams = React.use(params);
@@ -60,7 +61,14 @@ export default function HomeDetailsPage({ params }) {
   const images = [home.photo, home.secondPhoto];
 
   return (
-    <section className="min-h-screen bg-[#06141B] py-10 px-4 sm:px-6 lg:px-8">
+    <div>
+      <section>
+      <UniversalNav></UniversalNav>
+      </section>
+
+
+      <section className="min-h-screen pt-32 bg-[#06141B] py-10 px-4 sm:px-6 lg:px-8">
+        
       <div className="max-w-7xl mx-auto">
 
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-[0_0_30px_rgba(16,185,129,0.18)] p-6">
@@ -172,5 +180,6 @@ export default function HomeDetailsPage({ params }) {
         </div>
       </div>
     </section>
+    </div>
   );
 }

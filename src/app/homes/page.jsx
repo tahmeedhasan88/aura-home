@@ -1,11 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import UniversalNav from "../Components/UniversalNav";
 
 export default function HomesPage() {
   const [homes, setHomes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams();
+
+const search =
+  searchParams.get("search")?.toLowerCase() || "";
 
   useEffect(() => {
     fetch("/homes.json")
@@ -30,8 +36,26 @@ export default function HomesPage() {
     );
   }
 
+
+  const filteredHomes = homes.filter((home) => {
+    const name = typeof home.name === 'string' ? home.name.toLowerCase() : '';
+    const location = typeof home.location === 'string' ? home.location.toLowerCase() : '';
+
+    if (!search) {
+      return true;
+    }
+
+    return name.includes(search) || location.includes(search);
+  });
+
   return (
-    <section className="min-h-screen py-16 bg-[#06141B]">
+    <div>
+      <section>
+        <UniversalNav></UniversalNav>
+      </section>
+
+
+      <section className="min-h-screen py-16 pt-32 bg-[#06141B]">
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Header */}
@@ -49,7 +73,7 @@ export default function HomesPage() {
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 justify-items-center">
 
-          {homes.map((home, index) => (
+          {filteredHomes.map((home, index) => (
             <div
               key={home.id || index}
               className="
@@ -213,5 +237,6 @@ export default function HomesPage() {
 
       </div>
     </section>
+    </div>
   );
 }
