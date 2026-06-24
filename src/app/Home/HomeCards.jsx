@@ -29,7 +29,15 @@ export default function HomeCards() {
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 justify-items-center">
+        <div className="
+    grid
+    grid-cols-[repeat(auto-fit,minmax(320px,320px))]
+    justify-center
+    gap-8
+    max-w-7xl
+    mx-auto
+    px-4
+  ">
 
           {homes.map((home, index) => (
             <div

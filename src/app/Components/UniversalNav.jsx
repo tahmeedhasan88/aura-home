@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import {
   Search,
@@ -14,6 +14,8 @@ import {
 
 export default function UniversalNav() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -21,6 +23,34 @@ export default function UniversalNav() {
 
   const search = searchParams.get('search') || '';
   const searchPath = pathname.startsWith('/homes') ? pathname : '/homes';
+
+  useEffect(() => {
+    setSearchInput(search);
+  }, [search]);
+
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (!searchInput || searchInput.length < 2) {
+        setSuggestions([]);
+        return;
+      }
+
+      const res = await fetch('/homes.json');
+      const data = await res.json();
+      const value = searchInput.slice(0, 2).toLowerCase();
+      const filtered = data
+        .filter(
+          (item) =>
+            typeof item.name === 'string' &&
+            item.name.toLowerCase().startsWith(value)
+        )
+        .slice(0, 2);
+
+      setSuggestions(filtered);
+    };
+
+    fetchSuggestions();
+  }, [searchInput]);
 
   const updateSearch = (value, replace = true) => {
     const params = new URLSearchParams();
@@ -40,13 +70,19 @@ export default function UniversalNav() {
   };
 
   const handleSearch = (e) => {
-    updateSearch(e.target.value);
+    const value = e.target.value;
+    setSearchInput(value);
+    updateSearch(value);
   };
 
   const handleSearchKeyDown = (e) => {
     if (e.key !== 'Enter') return;
     e.preventDefault();
-    updateSearch(e.currentTarget.value, false);
+    updateSearch(searchInput, false);
+  };
+
+  const handleSuggestionClick = (id) => {
+    router.push(`/homes/${id}`);
   };
 
   return (
@@ -77,7 +113,7 @@ export default function UniversalNav() {
 
             shadow-[0_8px_32px_rgba(0,0,0,0.25)]
 
-            overflow-hidden
+            overflow-visible
           "
         >
           <div className="absolute inset-y-0 right-0 w-[60%] bg-gradient-to-l from-white/15 via-white/5 to-transparent pointer-events-none" />
@@ -111,7 +147,7 @@ export default function UniversalNav() {
 
               <input
                 type="text"
-                value={search}
+                value={searchInput}
                 onChange={handleSearch}
                 onKeyDown={handleSearchKeyDown}
                 placeholder="Search by name or location..."
@@ -142,6 +178,20 @@ export default function UniversalNav() {
                   focus:border-cyan-400/40
                 "
               />
+              {suggestions.length > 0 && (
+                <div className="absolute left-0 right-0 mt-2 rounded-xl bg-black/90 border border-white/10 shadow-lg z-20">
+                  {suggestions.map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => handleSuggestionClick(item.id)}
+                      className="w-full text-left px-4 py-3 text-white hover:bg-white/10 transition"
+                    >
+                      {item.name}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 

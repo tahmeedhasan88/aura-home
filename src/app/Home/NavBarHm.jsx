@@ -97,7 +97,9 @@ export default function NavBarHm() {
               ))}
             </div>
 
-            <button
+          <Link href="/signin">
+          
+          <button
               className="
                 px-5 py-2.5
 
@@ -121,6 +123,11 @@ export default function NavBarHm() {
             >
               Sign In
             </button>
+
+          
+          </Link>
+
+
 
           </div>
 
@@ -173,6 +180,8 @@ export default function NavBarHm() {
                   </Link>
                 ))}
 
+                <Link href="/signin" >
+                
                 <button
                   className="
                     mt-2
@@ -190,6 +199,8 @@ export default function NavBarHm() {
                 >
                   Sign In
                 </button>
+                
+                </Link>
 
               </div>
             </motion.div>
