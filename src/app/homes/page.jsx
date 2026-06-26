@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import UniversalNav from "../Components/UniversalNav";
 
+
 export default function HomesPage() {
   const [homes, setHomes] = useState([]);
   const [loading, setLoading] = useState(true);
