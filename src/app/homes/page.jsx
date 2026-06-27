@@ -30,9 +30,7 @@ const search =
   if (loading) {
     return (
       <section className="min-h-screen flex items-center justify-center bg-[#06141B]">
-        <p className="text-emerald-300 text-lg animate-pulse">
-          Loading homes...
-        </p>
+        <span className="loading loading-spinner text-success"></span>
       </section>
     );
   }

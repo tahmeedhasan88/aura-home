@@ -13,9 +13,9 @@ const Banner = () => {
       <section className="relative w-full min-h-[80vh] md:min-h-screen flex items-center overflow-hidden">
 
         {/* Background Image */}
-        <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 z-0">
           <Image
-            src="/bannerimg.png"
+            src="/bnrimg.png"
             alt="AuraHome Luxury Living Room"
             fill
             priority
