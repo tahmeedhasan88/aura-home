@@ -1,6 +1,43 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import { postUser } from "../Server/auth";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
+
+  const router = useRouter();
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    
+  });
+
+
+  const handleChange = (e) => {
+
+    setForm({...form, [e.target.name]: e.target.value});
+  }
+
+
+  const handleSubmit = async (e) => {
+
+  e.preventDefault();
+
+  const result = await postUser(form);
+
+  console.log(form);
+
+  if (result.acknowledged) {
+
+    alert("User created successfully!");
+    router.push("/signin");
+  }
+
+  }
+
   return (
     <section className="min-h-screen flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
@@ -63,7 +100,7 @@ export default function SignUpPage() {
           </div>
 
           <div className="relative">
-            <form className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-5">
               {/* Name */}
               <div>
                 <label className="mb-2 block text-sm text-gray-300">
@@ -73,6 +110,9 @@ export default function SignUpPage() {
                 <input
                   type="text"
                   placeholder="Enter your name"
+                  name = "name"
+                  value={form.name}
+                  onChange={handleChange}
                   className="
                     w-full
                     rounded-2xl
@@ -98,7 +138,7 @@ export default function SignUpPage() {
               </div>
 
               {/* Picture */}
-              <div>
+              {/* <div>
                 <label className="mb-2 block text-sm text-gray-300">
                   Profile Picture
                 </label>
@@ -133,7 +173,9 @@ export default function SignUpPage() {
                     transition
                   "
                 />
-              </div>
+              </div> */}
+
+
 
               {/* Email */}
               <div>
@@ -144,6 +186,9 @@ export default function SignUpPage() {
                 <input
                   type="email"
                   placeholder="Enter your email"
+                  name = "email"
+                  value={form.email}
+                  onChange={handleChange}
                   className="
                     w-full
                     rounded-2xl
@@ -177,6 +222,9 @@ export default function SignUpPage() {
                 <input
                   type="password"
                   placeholder="Create a password"
+                  name = "password"
+                  value={form.password}
+                  onChange={handleChange}
                   className="
                     w-full
                     rounded-2xl

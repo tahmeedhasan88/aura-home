@@ -1,6 +1,25 @@
 import Link from "next/link";
+import { useState } from "react";
 
 export default function SignInPage() {
+
+  const [form, setForm] = useState({
+
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+
+    setForm({...form, [e.target.name]: e.target.value});
+  };
+
+
+  const handleSubmit = (e) => {
+    
+  }
+
+
   return (
     <section className="px-4 py-12 min-h-screen flex items-center justify-center">
       <div className="w-full max-w-md">
