@@ -1,3 +1,6 @@
+"use client";
+
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -15,8 +18,14 @@ export default function SignInPage() {
   };
 
 
-  const handleSubmit = (e) => {
-    
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const result = await signIn("credentials", {
+      email: form.email,
+      password: form.password,
+      redirect: false,
+    });
+
   }
 
 
@@ -83,7 +92,7 @@ export default function SignInPage() {
           </div>
 
           <div className="relative">
-            <form className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="block text-sm text-gray-300 mb-2">
                   Email Address
@@ -92,6 +101,9 @@ export default function SignInPage() {
                 <input
                   type="email"
                   placeholder="Enter your email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
                   className="
                     w-full
                     rounded-2xl
@@ -122,6 +134,9 @@ export default function SignInPage() {
                 <input
                   type="password"
                   placeholder="Enter your password"
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
                   className="
                     w-full
                     rounded-2xl

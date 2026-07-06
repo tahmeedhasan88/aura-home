@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import NavAuthButton from '../Components/Buttons/NavAuthButton';
 
 export default function NavBarHm() {
   const [open, setOpen] = useState(false);
@@ -97,35 +98,9 @@ export default function NavBarHm() {
               ))}
             </div>
 
-          <Link href="/signin">
           
-          <button
-              className="
-                px-5 py-2.5
 
-                rounded-xl
-
-                bg-cyan-500/15
-                border border-cyan-400/30
-
-                backdrop-blur-md
-
-                text-cyan-200
-                text-sm
-                font-medium
-
-                hover:bg-cyan-500/25
-                hover:border-cyan-400/60
-
-                transition-all
-                duration-300
-              "
-            >
-              Sign In
-            </button>
-
-          
-          </Link>
+          <NavAuthButton></NavAuthButton>
 
 
 
@@ -165,6 +140,35 @@ export default function NavBarHm() {
             >
               <div className="flex flex-col p-6 gap-5">
 
+
+                {/* <Link href="/signin" >
+                
+                <button
+                  className="
+                    mt-2
+                    py-2
+                    px-3
+
+                    rounded-xl
+                    font-semibold
+
+                    bg-cyan-200
+                    border border-cyan-400/30
+
+                    text-black
+
+                    backdrop-blur-md
+                  "
+                >
+                  Sign In
+                </button>
+                
+                </Link> */}
+
+
+                <NavAuthButton></NavAuthButton>
+                
+
                 {navLinks.map((item) => (
                   <Link
                     key={item.name}
@@ -180,27 +184,7 @@ export default function NavBarHm() {
                   </Link>
                 ))}
 
-                <Link href="/signin" >
                 
-                <button
-                  className="
-                    mt-2
-                    py-3
-
-                    rounded-xl
-
-                    bg-cyan-500/15
-                    border border-cyan-400/30
-
-                    text-cyan-200
-
-                    backdrop-blur-md
-                  "
-                >
-                  Sign In
-                </button>
-                
-                </Link>
 
               </div>
             </motion.div>
