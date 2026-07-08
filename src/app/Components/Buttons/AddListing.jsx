@@ -1,30 +1,63 @@
 "use client";
-import { usePathname, useRouter } from 'next/navigation';
 
-import React from 'react';
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
-const AddListing = ({ home }) => {
+export default function AddListing({ home }) {
+  const router = useRouter();
+  const { status } = useSession();
 
-const isLogin = false;
-const router = useRouter();
-const path = usePathname();
-const add2Listig = () => {
-    
-    if (isLogin) alert(home.id)
-
-    else{
-        router.push(`/signin?callback=${path}`);
+  const handleAddListing = () => {
+    if (status !== "authenticated") {
+      router.push("/signin");
+      return;
     }
-    
-}
 
-    return (
-        <div>
-            <button onClick={add2Listig} className="w-full sm:w-auto inline-flex items-center justify-center rounded-3xl bg-emerald-500 px-4 sm:px-6 py-2.5 sm:py-3 text-sm font-semibold text-black transition hover:scale-[1.01]">
-                              Add Listing
-                            </button>
-        </div>
+    const storedListings =
+      JSON.parse(localStorage.getItem("listings")) || [];
+
+    const exists = storedListings.find(
+      (item) => item.id === home.id
     );
-};
 
-export default AddListing;
+    if (!exists) {
+      storedListings.push({
+        id: home.id,
+        name: home.name,
+        photo: home.photo,
+        shortDescription: home.shortDescription,
+        price: home.price,
+      });
+
+      localStorage.setItem(
+        "listings",
+        JSON.stringify(storedListings)
+      );
+    }
+
+    toast.success("Listing added successfully!");
+    router.push("/listings");
+    
+  };
+
+  return (
+
+    <div>
+    <button
+      onClick={handleAddListing}
+      className="w-full sm:w-auto inline-flex items-center justify-center rounded-3xl bg-emerald-500 px-4 sm:px-6 py-2.5 sm:py-3 text-sm font-semibold text-black transition hover:scale-[1.01]"
+    >
+      Add Listing
+    </button>
+
+
+
+
+
+    
+    </div>
+
+    
+  );
+}

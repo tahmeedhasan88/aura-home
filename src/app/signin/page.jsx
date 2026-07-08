@@ -3,6 +3,7 @@
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function SignInPage() {
 
@@ -25,6 +26,8 @@ export default function SignInPage() {
       password: form.password,
       redirect: false,
     });
+
+    toast.success("Signed in successfully!!");
 
   }
 

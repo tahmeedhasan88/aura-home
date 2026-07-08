@@ -3,6 +3,7 @@ import "./globals.css";
 
 import Footer from "./Components/Footer";
 import NextAuthProvider from "./Provider/NextAuthProvider";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -151,6 +152,17 @@ export default function RootLayout({ children }) {
       </footer>
         
       
+
+
+      <ToastContainer
+      position="top-right"
+      autoClose={3000}
+      hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        theme="colored"/>
+
       </body>
     </html>
 
