@@ -13,7 +13,9 @@ const NavAuthButton = () => {
             
         {session.status === "authenticated" ? 
         
-        <button
+          <Link href="/user-profile">
+
+            <button
               className="
                 w-9
                 h-9
@@ -33,6 +35,11 @@ const NavAuthButton = () => {
             >
               <User size={16} />
             </button> 
+
+          </Link>
+
+
+        
               
               : 
         
