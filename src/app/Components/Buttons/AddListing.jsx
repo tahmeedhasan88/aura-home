@@ -6,40 +6,38 @@ import { toast } from "react-toastify";
 
 export default function AddListing({ home }) {
   const router = useRouter();
-  const { status } = useSession();
+  const { data: session, status } = useSession();
 
-  const handleAddListing = () => {
-    if (status !== "authenticated") {
-      router.push("/signin");
-      return;
-    }
+  const handleAddListing = async () => {
+  if (status !== "authenticated") {
+    router.push("/signin");
+    return;
+  }
 
-    const storedListings =
-      JSON.parse(localStorage.getItem("listings")) || [];
+  const listing = {
+    homeId: home.id,
+    userEmail: session.user.email,
+    name: home.name,
+    photo: home.photo,
+    shortDescription: home.shortDescription,
+    price: home.price,
+  };
 
-    const exists = storedListings.find(
-      (item) => item.id === home.id
-    );
+  const res = await fetch("/api/listings", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(listing),
+  });
 
-    if (!exists) {
-      storedListings.push({
-        id: home.id,
-        name: home.name,
-        photo: home.photo,
-        shortDescription: home.shortDescription,
-        price: home.price,
-      });
+  const data = await res.json();
 
-      localStorage.setItem(
-        "listings",
-        JSON.stringify(storedListings)
-      );
-    }
-
+  if (data.success) {
     toast.success("Listing added successfully!");
     router.push("/listings");
-    
-  };
+  }
+};
 
   return (
 

@@ -24,6 +24,7 @@ import {
 import { useState } from "react";
 import MyListings from "../Pages/ProfilePage/MyListings";
 import PropertyStatus from "../Pages/ProfilePage/PropertyStatus";
+import Link from "next/link";
 
 
 export default function UserProfile() {
@@ -103,13 +104,30 @@ export default function UserProfile() {
           </div>
 
           <nav className="flex-1 space-y-2 p-6">
+
+            
+                    <Link
+                      href="/"
+                      className="relative z-10 shrink-0"
+                    >
+                      <h1 className="font-bold  tracking-wide leading-none">
+                        <span className="text-cyan-400 text-[18px] sm:text-[20px] md:text-[24px]">
+                          AURA
+                        </span>
+                        <span className="text-white text-[18px] sm:text-[20px] md:text-[24px]">
+                          HOME
+                        </span>
+                      </h1>
+                    </Link>
+
+
             {menuItems.map((item) => {
               const Icon = item.icon;
 
               return (
                 <button
                   key={item.title}
-                  className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition
+                  className={`flex w-full items-center gap-3 mt-5 rounded-xl px-4 py-3 text-left transition
                   ${
                     item.active
                       ? "bg-emerald-500/20 text-emerald-400"
@@ -163,33 +181,36 @@ export default function UserProfile() {
 
                   {/* Profile Image */}
 
-                  <div className="relative h-40 w-40">
+                 {/* Profile Image */}
 
-                    <div className="absolute inset-0 rounded-full border-4 border-emerald-400" />
+<div className="relative h-40 w-40">
 
-                    <img
-                      src="https://randomuser.me/api/portraits/men/32.jpg"
-                      alt="profile"
-                      fill
-                      className="rounded-full object-cover p-2"
-                    />
+  {/* Green Border */}
+  <div className="absolute inset-0 rounded-full border-4 border-emerald-400"></div>
 
-                    {/* Online Dot */}
+  {/* Profile Picture */}
+  <img
+    src="https://randomuser.me/api/portraits/men/32.jpg"
+    alt="Profile"
+    className="h-full w-full rounded-full object-cover p-2.5"
+  />
 
-                    <span className="absolute bottom-5 right-5 h-5 w-5 rounded-full border-4 border-[#0C1825] bg-emerald-400"></span>
+  {/* Upload Button - Border Edge */}
+  <label
+    htmlFor="profile-image"
+    className="absolute bottom-0 right-0 z-20 flex h-11 w-11 translate-x-1/4 translate-y-1/4 cursor-pointer items-center justify-center rounded-full border-4 border-[#0C1825] bg-red-500 transition hover:bg-red-600"
+  >
+    <Plus size={20} className="text-white" />
+  </label>
 
-                    {/* Plus Button */}
+  <input
+    id="profile-image"
+    type="file"
+    accept="image/*"
+    className="hidden"
+  />
 
-                    <button
-                      className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-red-500 shadow-lg transition hover:bg-red-600"
-                    >
-                      <Plus
-                        size={20}
-                        className="text-white"
-                      />
-                    </button>
-
-                  </div>
+</div>
 
                   {/* Info */}
 

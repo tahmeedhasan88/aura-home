@@ -1,29 +1,49 @@
 import { Bath, Bed, Heart, MapPin, MoreVertical } from 'lucide-react';
-import React from 'react';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import React, { useEffect, useState } from 'react';
 
 const MyListings = () => {
 
 
-const listings = [
-    {
-      id: 1,
-      image:
-        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200",
-      title: "Lunaov Loft",
-      location: "Manhattan, New York, USA",
-      price: "$2,550",
-      type: "Apartment",
-    },
-    {
-      id: 2,
-      image:
-        "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200",
-      title: "Urban Oasis",
-      location: "Brooklyn, New York, USA",
-      price: "$2,800",
-      type: "Apartment",
-    },
-  ];
+ const { data: session } = useSession();
+  const [listings, setListings] = useState([]);
+
+  useEffect(() => {
+    const fetchListings = async () => {
+      if (!session?.user?.email) return;
+
+      try {
+        const res = await fetch(
+          `/api/listings?email=${session.user.email}`
+        );
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+        setListings(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchListings();
+  }, [session]);
+
+
+
+  const handleCancel = (id) => {
+    const updated = listings.filter(
+      (item) => item.id !== id
+    );
+
+    localStorage.setItem(
+      "listings",
+      JSON.stringify(updated)
+    );
+
+    setListings(updated);
+  };
 
 
 
@@ -39,101 +59,93 @@ const listings = [
                 My Listings
               </h2>
 
+
+              <Link href="/listings">
               <button className="text-sm text-gray-400 transition hover:text-white">
                 View All
               </button>
+              
+              </Link>
+
+              
             </div>
 
             <div className="grid gap-6 md:grid-cols-2">
 
-              {listings.map((listing) => (
-                <div
-                  key={listing.id}
-                  className="overflow-hidden rounded-2xl border border-white/10 bg-[#101D2C] transition hover:border-emerald-500/40"
-                >
-                  {/* Image */}
+              {listings.length === 0 ? (
+        <div className="rounded-3xl border border-white/10 bg-[#0C1825] p-10 text-center">
+          <p className="text-gray-400">
+            No listings added yet.
+          </p>
 
-                  <div className="relative h-64">
+          <Link
+            href="/homes"
+            className="mt-6 inline-flex rounded-xl bg-emerald-500 px-6 py-3 font-semibold text-black transition hover:bg-emerald-400"
+          >
+            Browse Homes
+          </Link>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          {listings.slice(0, 2).map((home, index) => (
+            <div
+                  key={home.id ?? home._id ?? index}
+                  className="
+                    w-full
+                    max-w-[320px]
+                    rounded-[30px]
+                    overflow-hidden
+                    bg-white/5
+                    backdrop-blur-xl
+                    border
+                    border-white/10
+                    shadow-[0_0_30px_rgba(16,185,129,0.18)]
+                  "
+                >
+                  <div className="p-5">
 
                     <img
-                      src={listing.image}
-                      alt={listing.title}
-                      fill
-                      className="object-cover"
+                      src={home.photo}
+                      alt={home.name}
+                      className="w-full h-[210px] object-cover rounded-2xl"
                     />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                    <h2 className="mt-5 text-xl font-semibold text-white">
+                      {home.name}
+                    </h2>
 
-                    <button className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#081421]/80 backdrop-blur">
-                      <Heart size={18} />
+                    <p className="mt-2 text-sm text-gray-400">
+                      {home.shortDescription}
+                    </p>
+
+                    <div className="mt-5 flex justify-between items-center">
+                      <span className="text-xl font-bold text-emerald-300">
+                        {home.price}
+                      </span>
+                    </div>
+
+                    <button
+                      onClick={() => handleCancel(home.id)}
+                      className="
+                        w-full
+                        mt-6
+                        py-3
+                        rounded-xl
+                        bg-red-500
+                        text-white
+                        font-medium
+                        hover:bg-red-600
+                        transition
+                      "
+                    >
+                      Cancel Listing
                     </button>
 
                   </div>
-
-                  {/* Body */}
-
-                  <div className="space-y-4 p-5">
-
-                    <div className="flex items-start justify-between">
-
-                      <div>
-
-                        <div className="flex items-center gap-3">
-
-                          <h3 className="text-xl font-semibold">
-                            {listing.title}
-                          </h3>
-
-                          <span className="rounded bg-emerald-500/20 px-3 py-1 text-xs text-emerald-400">
-                            {listing.type}
-                          </span>
-
-                        </div>
-
-                        <div className="mt-3 flex items-center gap-2 text-sm text-gray-400">
-                          <MapPin size={15} />
-                          {listing.location}
-                        </div>
-
-                      </div>
-
-                      <button className="rounded-lg p-2 transition hover:bg-white/5">
-                        <MoreVertical size={20} />
-                      </button>
-
-                    </div>
-
-                    <div className="flex items-center justify-between">
-
-                      <div>
-                        <span className="text-3xl font-bold text-white">
-                          {listing.price}
-                        </span>
-
-                        <span className="ml-1 text-gray-400">
-                          / month
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-5 text-gray-400">
-
-                        <div className="flex items-center gap-1">
-                          <Bed size={18} />
-                          <span>3</span>
-                        </div>
-
-                        <div className="flex items-center gap-1">
-                          <Bath size={18} />
-                          <span>2</span>
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                  </div>
                 </div>
-              ))}
+          ))}
+        </div>
+      )}
 
             </div>
 
@@ -145,3 +157,29 @@ const listings = [
 };
 
 export default MyListings;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -3,16 +3,33 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import UniversalNav from "../Components/UniversalNav";
+import { useSession } from "next-auth/react";
+
+
 
 export default function ListingsPage() {
   const [listings, setListings] = useState([]);
 
-  useEffect(() => {
-    const data =
-      JSON.parse(localStorage.getItem("listings")) || [];
+const {  data: session,  status } = useSession();
+
+
+useEffect(() => {
+  const fetchListings = async () => {
+    if (!session?.user?.email) return;
+
+    const res = await fetch(
+      `/api/listings?email=${session.user.email}`
+    );
+
+    const data = await res.json();
 
     setListings(data);
-  }, []);
+  };
+
+  fetchListings();
+}, [session]);
+
+
 
   const handleCancel = (id) => {
     const updated = listings.filter(
