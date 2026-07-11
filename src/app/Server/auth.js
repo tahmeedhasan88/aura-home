@@ -3,20 +3,35 @@
 import { collections, dbConnect } from "../lib/dbConnect";
 import bcrypt from "bcryptjs";
 
+const normalizeEmail = (value) => {
+  if (typeof value !== "string") return "";
+  return value.trim().toLowerCase();
+};
+
+const buildEmailQuery = (value) => {
+  const normalizedEmail = normalizeEmail(value);
+  return {
+    email: {
+      $regex: new RegExp(`^${normalizedEmail.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`, "i"),
+    },
+  };
+};
+
 export const postUser = async (payload) => {
 
 const { email, password, name } = payload;
 //check payload 
 if(!email || !password) return null;
 
+const normalizedEmail = normalizeEmail(email);
 
 //check user 
-const isExist = await dbConnect(collections.USERS).findOne({email});
+const isExist = await dbConnect(collections.USERS).findOne(buildEmailQuery(normalizedEmail));
 
 //create user 
 const newUser = {
     name, 
-    email,
+    email: normalizedEmail,
     password: await bcrypt.hash(password, 14),
     role: "user",
     
@@ -43,7 +58,8 @@ export const loginUser = async (payload) => {
 const { email, password } = payload;
 if(!email || !password) return null;
 
-const user = await dbConnect(collections.USERS).findOne({email});
+const normalizedEmail = normalizeEmail(email);
+const user = await dbConnect(collections.USERS).findOne(buildEmailQuery(normalizedEmail));
 
 if(!user) return null;
 

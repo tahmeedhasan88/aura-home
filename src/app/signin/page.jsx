@@ -2,10 +2,13 @@
 
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function SignInPage() {
+
+  const router = useRouter();
 
   const [form, setForm] = useState({
 
@@ -28,6 +31,7 @@ export default function SignInPage() {
     });
 
     toast.success("Signed in successfully!!");
+    router.push("/");
 
   }
 

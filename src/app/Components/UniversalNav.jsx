@@ -11,22 +11,20 @@ import {
   Menu,
   X,
 } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 
 export default function UniversalNav() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [searchInput, setSearchInput] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
-
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const session = useSession();
 
   const search = searchParams.get('search') || '';
   const searchPath = pathname.startsWith('/homes') ? pathname : '/homes';
 
-  useEffect(() => {
-    setSearchInput(search);
-  }, [search]);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState(() => search);
+  const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
     const fetchSuggestions = async () => {
@@ -84,6 +82,18 @@ export default function UniversalNav() {
   const handleSuggestionClick = (id) => {
     router.push(`/homes/${id}`);
   };
+
+
+  const handleProfileClick = () => {
+
+    if (session.status === 'authenticated') {
+      router.push('/user-profile');
+    }
+    else{
+      router.push('/signin');
+    }
+
+  }
 
   return (
     <nav className="fixed top-0 left-0 w-full z-[100] px-4 md:px-8 pt-4">
@@ -218,6 +228,7 @@ export default function UniversalNav() {
             </button>
 
             <button
+              onClick={handleProfileClick}
               className="
                 w-9
                 h-9
@@ -315,7 +326,17 @@ export default function UniversalNav() {
                 <span>Notifications</span>
               </button>
 
+              <div>
+
+
+         
+
+
+
+              </div>
+
               <button
+                onClick={handleProfileClick}
                 className="
                   flex
                   items-center

@@ -1,47 +1,62 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import UniversalNav from "../Components/UniversalNav";
 import { useSession } from "next-auth/react";
 
-
-
 export default function ListingsPage() {
   const [listings, setListings] = useState([]);
+  const { data: session } = useSession();
 
-const {  data: session,  status } = useSession();
+  useEffect(() => {
+    const fetchListings = async () => {
+      if (!session?.user?.email) return;
 
+      const res = await fetch(`/api/listings?email=${encodeURIComponent(session.user.email)}`);
+      const data = await res.json();
 
-useEffect(() => {
-  const fetchListings = async () => {
-    if (!session?.user?.email) return;
+      setListings(data);
+    };
 
-    const res = await fetch(
-      `/api/listings?email=${session.user.email}`
-    );
+    fetchListings();
+  }, [session]);
 
-    const data = await res.json();
+  const handleCancel = async (listing) => {
+    const listingId = listing?._id?.toString?.() || listing?.id || listing?.homeId;
 
-    setListings(data);
-  };
+    if (!listingId) return;
 
-  fetchListings();
-}, [session]);
+    const confirmed = window.confirm("Are you sure you want to delete this listing?");
 
+    if (!confirmed) return;
 
+    try {
+      const res = await fetch("/api/listings", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          listingId,
+          email: session?.user?.email,
+        }),
+      });
 
-  const handleCancel = (id) => {
-    const updated = listings.filter(
-      (item) => item.id !== id
-    );
+      const data = await res.json();
 
-    localStorage.setItem(
-      "listings",
-      JSON.stringify(updated)
-    );
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Failed to delete listing");
+      }
 
-    setListings(updated);
+      setListings((prev) => prev.filter((item) => {
+        const currentId = item?._id?.toString?.() || item?.id || item?.homeId;
+        return currentId !== listingId;
+      }));
+    } catch (error) {
+      console.error(error);
+      alert(error.message || "Could not delete the listing.");
+    }
   };
 
   return (
@@ -49,25 +64,15 @@ useEffect(() => {
       <UniversalNav />
 
       <section className="min-h-screen bg-[#06141B] pt-32 pb-16 px-4">
-
         <div className="max-w-7xl mx-auto">
-
           <div className="text-center mb-14">
-            <h1 className="text-4xl md:text-5xl font-bold text-white">
-              My Listings
-            </h1>
-
-            <p className="text-gray-400 mt-3">
-              Your selected properties.
-            </p>
+            <h1 className="text-4xl md:text-5xl font-bold text-white">My Listings</h1>
+            <p className="text-gray-400 mt-3">Your selected properties.</p>
           </div>
 
           {listings.length === 0 ? (
             <div className="text-center">
-
-              <p className="text-gray-400 text-lg">
-                No listing added.
-              </p>
+              <p className="text-gray-400 text-lg">No listing added.</p>
 
               <Link
                 href="/homes"
@@ -75,82 +80,30 @@ useEffect(() => {
               >
                 Browse Homes
               </Link>
-
             </div>
           ) : (
-            <div
-              className="
-                grid
-                grid-cols-1
-                sm:grid-cols-2
-                lg:grid-cols-3
-                xl:grid-cols-4
-                gap-8
-                justify-items-center
-              "
-            >
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
               {listings.map((home) => (
-                <div
-                  key={home.id}
-                  className="
-                    w-full
-                    max-w-[320px]
-                    rounded-[30px]
-                    overflow-hidden
-                    bg-white/5
-                    backdrop-blur-xl
-                    border
-                    border-white/10
-                    shadow-[0_0_30px_rgba(16,185,129,0.18)]
-                  "
-                >
+                <div key={home.id ?? home._id} className="w-full max-w-[320px] rounded-[30px] overflow-hidden bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(16,185,129,0.18)]">
                   <div className="p-5">
+                    <img src={home.photo} alt={home.name} className="w-full h-[210px] object-cover rounded-2xl" />
 
-                    <img
-                      src={home.photo}
-                      alt={home.name}
-                      className="w-full h-[210px] object-cover rounded-2xl"
-                    />
-
-                    <h2 className="mt-5 text-xl font-semibold text-white">
-                      {home.name}
-                    </h2>
-
-                    <p className="mt-2 text-sm text-gray-400">
-                      {home.shortDescription}
-                    </p>
+                    <h2 className="mt-5 text-xl font-semibold text-white">{home.name}</h2>
+                    <p className="mt-2 text-sm text-gray-400">{home.shortDescription}</p>
 
                     <div className="mt-5 flex justify-between items-center">
-                      <span className="text-xl font-bold text-emerald-300">
-                        {home.price}
-                      </span>
+                      <span className="text-xl font-bold text-emerald-300">{home.price}</span>
                     </div>
 
-                    <button
-                      onClick={() => handleCancel(home.id)}
-                      className="
-                        w-full
-                        mt-6
-                        py-3
-                        rounded-xl
-                        bg-red-500
-                        text-white
-                        font-medium
-                        hover:bg-red-600
-                        transition
-                      "
-                    >
+                    <button onClick={() => handleCancel(home)} className="w-full mt-6 py-3 rounded-xl bg-red-500 text-white font-medium hover:bg-red-600 transition">
                       Cancel Listing
                     </button>
-
                   </div>
                 </div>
               ))}
             </div>
           )}
-
         </div>
-
       </section>
     </>
   );

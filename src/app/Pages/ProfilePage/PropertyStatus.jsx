@@ -1,7 +1,20 @@
 import { UploadCloud } from 'lucide-react';
 import React from 'react';
+import Swal from 'sweetalert2';
 
 const PropertyStatus = () => {
+
+  const handleSubmit = (e) => {
+
+    Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: "You are not allowed to post a property!",
+});
+  }
+
+
+
     return (
         <div>
 
@@ -92,7 +105,7 @@ const PropertyStatus = () => {
                   />
                 </label>
 
-                <button className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 py-4 font-semibold text-black transition hover:bg-emerald-400">
+                <button onClick={handleSubmit} className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 py-4 font-semibold text-black transition hover:bg-emerald-400">
                   <UploadCloud size={20} />
                   Post Property
                 </button>
