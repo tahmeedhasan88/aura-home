@@ -23,17 +23,24 @@ export default function SignInPage() {
 
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const result = await signIn("credentials", {
-      email: form.email,
-      password: form.password,
-      redirect: false,
-    });
+  e.preventDefault();
 
-    toast.success("Signed in successfully!!");
-    router.push("/");
+  const result = await signIn("credentials", {
+    email: form.email,
+    password: form.password,
+    redirect: false,
+  });
 
+  console.log(result);
+
+  if (result?.error) {
+    toast.error(result.error);
+    return;
   }
+
+  toast.success("Signed in successfully!");
+  router.push("/");
+};
 
 
   return (
@@ -88,7 +95,7 @@ export default function SignInPage() {
               className="
                 absolute
                 -left-32
-                top-0
+                top-0 
                 h-full
                 w-24
                 rotate-12

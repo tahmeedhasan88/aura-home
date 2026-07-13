@@ -98,11 +98,12 @@ export default function UserProfile() {
     {
       icon: Heart,
       title: "Saved Listings",
+      href: "/listings",
     },
     {
       icon: Building2,
       title: "My Properties",
-      href: "/listings",
+      
     },
     
     
