@@ -2,6 +2,7 @@
 import { useSession } from 'next-auth/react';
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import { RiDeleteBin5Line } from 'react-icons/ri';
 
 const MyListings = () => {
   const { data: session } = useSession();
@@ -35,7 +36,7 @@ const MyListings = () => {
       customClass: {
         actions: 'flex justify-center gap-4',
         confirmButton: 'rounded-lg bg-red-500 px-5 py-2 text-white hover:bg-red-600',
-        cancelButton: 'bg-blue-500 rounded-lg border border-black px-5 py-2 text-black  hover:bg-gray-100',
+        cancelButton: 'bg-blue-500 rounded-lg border border-gray-200 px-5 py-2 text-white  hover:bg-blue-200',
       },
       buttonsStyling: false,
     });
@@ -107,7 +108,7 @@ const MyListings = () => {
           </Link>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="flex">
           {listings.length === 0 ? (
             <div className="rounded-3xl border border-white/10 bg-[#0C1825] p-10 text-center">
               <p className="text-gray-400">No listings added yet.</p>
@@ -120,31 +121,29 @@ const MyListings = () => {
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
               {listings.slice(0, 2).map((home, index) => (
-                <div
-                  key={home.id ?? home._id ?? index}
-                  className="w-full max-w-[320px] rounded-[30px] overflow-hidden bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(16,185,129,0.18)]"
-                >
-                  <div className="p-5">
-                    <img src={home.photo} alt={home.name} className="w-full h-[210px] object-cover rounded-2xl" />
-
-                    <h2 className="mt-5 text-xl font-semibold text-white">{home.name}</h2>
-
-                    <p className="mt-2 text-sm text-gray-400">{home.shortDescription}</p>
-
-                    <div className="mt-5 flex justify-between items-center">
-                      <span className="text-xl font-bold text-emerald-300">{home.price}</span>
-                    </div>
-
-                    <button
-                      onClick={() => handleCancel(home)}
-                      className="w-full mt-6 py-3 rounded-xl bg-red-500 text-white font-medium hover:bg-red-600 transition"
-                    >
-                      Cancel 
-                    </button>
-                  </div>
-                </div>
+                 <div key={home.id ?? home._id} className="w-full max-w-[320px] rounded-[30px] overflow-hidden bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_30px_rgba(16,185,129,0.18)]">
+                                  <div className="p-5">
+                                    <img src={home.photo} alt={home.name} className="w-full h-[210px] object-cover rounded-2xl" />
+                
+                                    <h2 className="mt-5 text-xl font-semibold text-white">{home.name}</h2>
+                                    <p className="mt-2 text-sm text-gray-400">{home.shortDescription}</p>
+                
+                                    <div className="mt-5 flex justify-between items-center">
+                                      <span className="text-xl font-bold text-emerald-300">{home.price}</span>
+                
+                                      
+                                      <RiDeleteBin5Line onClick={() => handleCancel(home)} className="text-red-500" />
+                                    </div>
+                
+                                    {/* <button  className="w-full mt-6 py-3 rounded-xl bg-red-500 text-white font-medium hover:bg-red-600 transition">
+                                      Cancel Listing
+                                    </button> */}
+                
+                
+                                  </div>
+                                </div>
               ))}
             </div>
           )}

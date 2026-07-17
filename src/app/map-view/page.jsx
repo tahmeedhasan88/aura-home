@@ -36,6 +36,7 @@ const getHomePosition = (home) => {
     typeof home?.location === "string"
       ? home.location
       : "";
+ 
 
   for (const [city, coords] of Object.entries(cityCoordinates)) {
     if (location.includes(city)) {
@@ -45,6 +46,8 @@ const getHomePosition = (home) => {
 
   return [45.4642, 9.19];
 };
+  
+
 
 const MapContent = dynamic(
   async () => {
@@ -107,7 +110,7 @@ const MapContent = dynamic(
     ssr: false,
     loading: () => (
       <div className="flex h-[450px] items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 text-sm text-slate-500 lg:h-[720px]">
-        Loading map...
+         <span className="loading loading-spinner text-success"></span>
       </div>
     ),
   }
@@ -123,11 +126,19 @@ export default function MapView() {
       .catch(() => setHomes([]));
   }, []);
 
+
+
+
+
   return (
     <div>
       <UniversalNav />
 
       <section className="mx-auto max-w-7xl px-4 pb-10 pt-28">
+        <div className="text-center lg:text-start mb-10">
+            <h1 className="text-3xl md:text-4xl font-bold text-white">Map View</h1>
+            <p className="text-gray-400 mt-3">You can see our properties in several locations of map</p>
+          </div>
         <div className="flex flex-col gap-8 lg:flex-row">
           <div className="w-full lg:w-[360px] xl:w-[380px]">
             <div className="space-y-8">
@@ -141,7 +152,7 @@ export default function MapView() {
           </div>
 
           <div className="min-w-0 flex-1">
-            <div className="overflow-hidden rounded-[30px] border border-white/10 shadow-[0_0_30px_rgba(16,185,129,0.18)]">
+            <div className="relative z-0 overflow-hidden rounded-[30px] border border-white/10 shadow-[0_0_30px_rgba(16,185,129,0.18)]">
               <MapContent homes={homes} />
             </div>
           </div>

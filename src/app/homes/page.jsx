@@ -70,21 +70,21 @@ const search =
         </div>
 
         {/* Cards */}
-       <div
-  className="
-    grid
-    grid-cols-[repeat(auto-fit,minmax(320px,320px))]
-    justify-center
-    gap-8
-    max-w-7xl
-    mx-auto
-    px-4
-  "
->
-  {filteredHomes.map((home, index) => (
-    <div
-      key={home.id || index}
-      className="
+        <div
+        className="
+        grid
+        grid-cols-[repeat(auto-fit,minmax(320px,320px))]
+        justify-center
+        gap-8
+        max-w-7xl
+        mx-auto
+        px-4
+        "
+        >
+        {filteredHomes.map((home, index) => (
+        <div
+        key={home.id || index}
+        className="
         group
         relative
         w-full
@@ -105,103 +105,103 @@ const search =
 
         transition-all
         duration-500
-      "
-    >
-      {/* Green Glow */}
-      <div
+        "
+        >
+        {/* Green Glow */}
+        <div
+        className="
+        absolute
+        inset-0
+        opacity-80
+        bg-[radial-gradient(circle_at_bottom,rgba(16,185,129,0.22),transparent_60%)]
+        "
+        />
+
+        {/* Shine Effect */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
         className="
           absolute
-          inset-0
-          opacity-80
-          bg-[radial-gradient(circle_at_bottom,rgba(16,185,129,0.22),transparent_60%)]
+          top-0
+          -left-32
+          h-full
+          w-24
+          rotate-12
+          bg-white/10
+          blur-xl
+
+          group-hover:left-[140%]
+
+          transition-all
+          duration-1000
         "
-      />
-
-      {/* Shine Effect */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div
-          className="
-            absolute
-            top-0
-            -left-32
-            h-full
-            w-24
-            rotate-12
-            bg-white/10
-            blur-xl
-
-            group-hover:left-[140%]
-
-            transition-all
-            duration-1000
-          "
         />
-      </div>
+        </div>
 
-      <div className="relative p-5">
+        <div className="relative p-5">
         {/* Image */}
         <div className="overflow-hidden rounded-2xl">
-          <img
-            src={home.photo}
-            alt={home.name}
-            className="
-              w-full
-              h-[210px]
-              object-cover
+        <img
+          src={home.photo}
+          alt={home.name}
+          className="
+            w-full
+            h-[210px]
+            object-cover
 
-              transition-transform
-              duration-500
+            transition-transform
+            duration-500
 
-              group-hover:scale-105
-            "
-          />
+            group-hover:scale-105
+          "
+        />
         </div>
 
         {/* Content */}
         <div className="mt-5">
-          <h3 className="text-white text-xl font-semibold line-clamp-1">
-            {home.name}
-          </h3>
+        <h3 className="text-white text-xl font-semibold line-clamp-1">
+          {home.name}
+        </h3>
 
-          <p className="text-gray-400 text-sm mt-2 line-clamp-2 min-h-[40px]">
-            {home.shortDescription}
-          </p>
+        <p className="text-gray-400 text-sm mt-2 line-clamp-2 min-h-[40px]">
+          {home.shortDescription}
+        </p>
 
-          <div className="mt-5 flex justify-between items-end">
-            <span className="text-emerald-300 text-xl font-bold">
-              {home.price}
-            </span>
+        <div className="mt-5 flex justify-between items-end">
+          <span className="text-emerald-300 text-xl font-bold">
+            {home.price}
+          </span>
 
-            <Link
-              href={`/homes/${home.id || index}`}
-              className="
-                px-4
-                py-2.5
+          <Link
+            href={`/homes/${home.id || index}`}
+            className="
+              px-4
+              py-2.5
 
-                rounded-xl
+              rounded-xl
 
-                text-sm
-                font-medium
+              text-sm
+              font-medium
 
-                bg-white/5
-                border border-white/10
+              bg-white/5
+              border border-white/10
 
-                text-white
+              text-white
 
-                hover:bg-emerald-500
-                hover:text-black
+              hover:bg-emerald-500
+              hover:text-black
 
-                transition
-              "
-            >
-              See Details
-            </Link>
-          </div>
+              transition
+            "
+          >
+            See Details
+          </Link>
         </div>
-      </div>
-    </div>
-  ))}
-</div>
+        </div>
+        </div>
+        </div>
+        ))}
+        </div>
 
         {/* Back Button */}
         <div className="flex justify-center mt-16">

@@ -94,6 +94,7 @@ export default function UserProfile() {
     {
       icon: Home,
       title: "Home",
+      href:"/",
     },
     {
       icon: Heart,
@@ -103,6 +104,7 @@ export default function UserProfile() {
     {
       icon: Building2,
       title: "My Properties",
+      href: "/",
       
     },
     
@@ -110,14 +112,17 @@ export default function UserProfile() {
     {
       icon: MessageSquare,
       title: "Messages",
+      href:"/",
     },
     {
       icon: CreditCard,
       title: "Billing History",
+      href: "/billing", 
     },
     {
       icon: Settings,
       title: "Support Center",
+      href: "/support",
     },
   ];
 
@@ -276,8 +281,9 @@ const handleProfileUpdate = async () => {
               const Icon = item.icon;
 
               return (
-                <button
+                <Link
                   key={item.title}
+                  href={item.href}
                   className={`flex w-full items-center gap-3 mt-5 rounded-xl px-4 py-3 text-left transition
                   ${
                     item.active
@@ -288,7 +294,7 @@ const handleProfileUpdate = async () => {
                   <Icon size={19} />
 
                   <span>{item.title}</span>
-                </button>
+                </Link>
               );
             })}
           </nav>
@@ -481,7 +487,6 @@ const handleProfileUpdate = async () => {
         </label>
 
         <input
-        defaultValue={user?.location}
         name="location"
         onChange={handleChange}
         value={form.location}

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import UniversalNav from "../Components/UniversalNav";
 import { useSession } from "next-auth/react";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import Swal from "sweetalert2";
 
 export default function ListingsPage() {
   const [listings, setListings] = useState([]);
@@ -27,36 +29,70 @@ export default function ListingsPage() {
 
     if (!listingId) return;
 
-    const confirmed = window.confirm("Are you sure you want to delete this listing?");
-
-    if (!confirmed) return;
-
-    try {
-      const res = await fetch("/api/listings", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          listingId,
-          email: session?.user?.email,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok || !data.success) {
-        throw new Error(data.message || "Failed to delete listing");
-      }
-
-      setListings((prev) => prev.filter((item) => {
-        const currentId = item?._id?.toString?.() || item?.id || item?.homeId;
-        return currentId !== listingId;
-      }));
-    } catch (error) {
-      console.error(error);
-      alert(error.message || "Could not delete the listing.");
-    }
+    const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            actions: 'flex justify-center gap-4',
+            confirmButton: 'rounded-lg bg-red-500 px-5 py-2 text-white hover:bg-red-600',
+            cancelButton: 'bg-blue-500 rounded-lg border border-gray-200 px-5 py-2 text-white  hover:bg-blue-200',
+          },
+          buttonsStyling: false,
+        });
+    
+        const result = await swalWithBootstrapButtons.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'No, cancel!',
+          reverseButtons: true,
+        });
+    
+        if (!result.isConfirmed) {
+          await swalWithBootstrapButtons.fire({
+            title: 'Cancelled',
+            text: 'Your listing is safe.',
+            icon: 'error',
+          });
+          return;
+        }
+    
+        try {
+          const res = await fetch('/api/listings', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ listingId, email: session?.user?.email }),
+          });
+    
+          const data = await res.json();
+    
+          if (!res.ok || !data.success) {
+            throw new Error(data.message || 'Failed to delete listing');
+          }
+    
+          setListings((prev) =>
+            prev.filter((item) => {
+              const currentId = item?._id?.toString?.() || item?.id || item?.homeId;
+              return currentId !== listingId;
+            })
+          );
+    
+          await swalWithBootstrapButtons.fire({
+            title: 'Deleted!',
+            text: 'Your listing has been deleted.',
+            icon: 'success',
+          });
+        } catch (error) {
+          console.error(error);
+          await swalWithBootstrapButtons.fire({
+            title: 'Delete failed',
+            text: error.message || 'Could not delete the listing.',
+            icon: 'error',
+          });
+        }
+    
   };
 
   return (
@@ -65,8 +101,8 @@ export default function ListingsPage() {
 
       <section className="min-h-screen bg-[#06141B] pt-32 pb-16 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <h1 className="text-4xl md:text-5xl font-bold text-white">My Listings</h1>
+          <div className="text-center lg:text-start mb-10">
+            <h1 className="text-3xl md:text-4xl font-bold text-white">My Listings</h1>
             <p className="text-gray-400 mt-3">Your selected properties.</p>
           </div>
 
@@ -93,11 +129,16 @@ export default function ListingsPage() {
 
                     <div className="mt-5 flex justify-between items-center">
                       <span className="text-xl font-bold text-emerald-300">{home.price}</span>
+
+                      
+                      <RiDeleteBin5Line onClick={() => handleCancel(home)} className="text-red-500" />
                     </div>
 
-                    <button onClick={() => handleCancel(home)} className="w-full mt-6 py-3 rounded-xl bg-red-500 text-white font-medium hover:bg-red-600 transition">
+                    {/* <button  className="w-full mt-6 py-3 rounded-xl bg-red-500 text-white font-medium hover:bg-red-600 transition">
                       Cancel Listing
-                    </button>
+                    </button> */}
+
+
                   </div>
                 </div>
               ))}
