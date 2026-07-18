@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { postUser } from "../Server/auth";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function SignUpPage() {
 
@@ -32,7 +33,7 @@ export default function SignUpPage() {
 
   if (result.acknowledged) {
 
-    alert("User created successfully!");
+    toast.success("Account created successfully!");
     router.push("/signin");
   }
 
