@@ -39,7 +39,7 @@ const Banner = () => {
             </h1>
 
             <p className="text-zinc-200 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed">
-              Premium real estate Next.js platform with luxury living
+              Premium real estate platform with luxury living
               experience. Modern design, smooth performance, and elegant
               comfort in one place.
             </p>

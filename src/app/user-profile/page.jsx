@@ -27,13 +27,15 @@ import PropertyStatus from "../Pages/ProfilePage/PropertyStatus";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import uploadImage from "@/app/lib/uploadImage";
+import { useRouter } from "next/navigation";
+
 
 
 export default function UserProfile() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { data: session, status } = useSession();
   const [openEditModal, setOpenEditModal] = useState(false);
-
+  const router = useRouter();  
 
   const [form, setForm] = useState({
   name: "",
@@ -164,12 +166,18 @@ export default function UserProfile() {
       ...prev,
       image: imageUrl,
     }));
+
+    router.refresh();
   } catch (error) {
     console.error(error);
   } finally {
     setUploading(false);
     event.target.value = "";
   }
+
+
+
+
 };
 
 
