@@ -390,7 +390,90 @@ export default function About() {
 
           </div>
 
+
+
+          {/* About AuraHome */}
+
+<section className="mt-10 rounded-3xl border border-white/10 bg-gradient-to-br from-[#09151b] to-[#10232d] p-6 md:p-10">
+
+  <div className="max-w-5xl">
+
+    <span className="inline-block rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-400">
+      About AuraHome
+    </span>
+
+    <h2 className="mt-6 text-3xl md:text-4xl font-bold leading-tight text-white">
+      Welcome to <span className="text-emerald-400">AuraHome</span>
+    </h2>
+
+    <p className="mt-6 text-gray-300 leading-8 text-justify">
+      At AuraHome, we are redefining the landscape of high-ticket real estate
+      and luxury vacation rentals. Designed for elite investors, remote
+      professionals, and premium travelers, our platform provides seamless
+      access to the world’s most exclusive spaces—from high-end architectural
+      lofts to state-of-the-art smart workspaces.
+    </p>
+
+    <p className="mt-6 text-gray-300 leading-8 text-justify">
+      We believe that finding a premium property should be as effortless as
+      living in one. By integrating advanced Next.js architecture with
+      real-time interactive mapping and secure identity ecosystems, we deliver
+      a lightning-fast, highly intuitive browsing experience. Whether you are a
+      property owner looking to showcase a luxury asset or a client seeking a
+      corporate stay, AuraHome serves as your trusted marketplace for premium
+      real estate.
+    </p>
+
+    <p className="mt-6 text-gray-300 leading-8 text-justify">
+      Over the past five years, our platform has experienced remarkable growth,
+      expanding from boutique local transactions to millions of dollars in
+      annual trade volume. We don't simply list properties—we curate premium
+      lifestyles, investment opportunities, and modern work environments.
+      Driven by aesthetic excellence and technical innovation, AuraHome is
+      where sophisticated living meets next-generation technology.
+    </p>
+
+    <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-5">
+
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
+        <h3 className="text-3xl font-bold text-emerald-400">20+</h3>
+        <p className="mt-2 text-sm text-gray-400">
+          Premium Properties
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
+        <h3 className="text-3xl font-bold text-emerald-400">5</h3>
+        <p className="mt-2 text-sm text-gray-400">
+          Years of Growth
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
+        <h3 className="text-3xl font-bold text-emerald-400">$9.6M+</h3>
+        <p className="mt-2 text-sm text-gray-400">
+          Sales Volume
+        </p>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
+        <h3 className="text-3xl font-bold text-emerald-400">100%</h3>
+        <p className="mt-2 text-sm text-gray-400">
+          Secure Platform
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
         </div>
+
+        
+
+
       </section>
     </>
   );
