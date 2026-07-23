@@ -251,15 +251,21 @@ const handleProfileUpdate = async () => {
 
         {/* Sidebar */}
 
-        <aside
-          className={`fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r border-white/10 bg-[#081421] transition-all duration-300 lg:static
+          <aside
+          className={`fixed inset-y-0 left-0 z-50
+          flex h-screen w-72 flex-col
+          border-r border-white/10 bg-[#081421]
+          transition-all duration-300
           ${
-            sidebarOpen
-              ? "translate-x-0"
-              : "-translate-x-full lg:translate-x-0"
-          }`}
-        >
-          <div className="flex items-center justify-between border-b border-white/10 p-6 lg:hidden">
+          sidebarOpen
+          ? "translate-x-0"
+          : "-translate-x-full lg:translate-x-0"
+          }
+          lg:static lg:h-screen`}
+          >
+        <div>
+
+            <div className="flex items-center justify-between border-b border-white/10 p-6 lg:hidden">
             <h2 className="text-xl font-semibold">Dashboard</h2>
 
             <button onClick={() => setSidebarOpen(false)}>
@@ -267,7 +273,19 @@ const handleProfileUpdate = async () => {
             </button>
           </div>
 
-          <nav className="flex-1 space-y-2 p-6">
+
+        </div>
+
+                      <nav
+                      className="
+                      flex-1
+                      overflow-y-auto
+                      p-6
+                      scrollbar-thin
+                      scrollbar-thumb-gray-600
+                      scrollbar-track-transparent
+                      "
+                      >
 
             
                     <Link
@@ -307,7 +325,7 @@ const handleProfileUpdate = async () => {
             })}
           </nav>
 
-          <div className="border-t border-white/10 p-6">
+          <div className="border-t border-white/10 p-6 shrink-0">
             <button onClick={() => signOut({ callbackUrl: "/",})} className="flex items-center gap-3 text-red-400 transition hover:text-red-300">
               <LogOut size={20} />
               Logout

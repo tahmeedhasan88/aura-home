@@ -19,12 +19,25 @@ export default function UniversalNav() {
   const pathname = usePathname();
   const session = useSession();
 
+  // console.log(session.data);
+
   const search = searchParams.get('search') || '';
   const searchPath = pathname.startsWith('/homes') ? pathname : '/homes';
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchInput, setSearchInput] = useState(() => search);
   const [suggestions, setSuggestions] = useState([]);
+  const [fixed, setFixed] = useState(true);
+
+useEffect(() => {
+  const handleScroll = () => {
+    setFixed(window.scrollY < 1200);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
 
   useEffect(() => {
     const fetchSuggestions = async () => {
@@ -96,7 +109,9 @@ export default function UniversalNav() {
   }
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-[100] px-4 md:px-8 pt-4">
+    <nav className={`w-full z-[100] px-4 md:px-8 pt-4 ${
+    fixed ? "fixed top-0 left-0" : "absolute top-[1000px] left-0"
+  }`}>
       <div className="max-w-7xl mx-auto">
 
         <div
@@ -227,27 +242,33 @@ export default function UniversalNav() {
               <Bell size={18} />
             </button>
 
-            <button
-              onClick={handleProfileClick}
-              className="
-                w-9
-                h-9
-
-                rounded-full
-
-                bg-white/10
-                border
-                border-white/15
-
-                flex
-                items-center
-                justify-center
-
-                text-white/80
-              "
-            >
-              <User size={16} />
-            </button>
+          <button
+          onClick={handleProfileClick}
+          className="
+          w-10
+          h-10
+          rounded-full
+          overflow-hidden
+          bg-white/10
+          border
+          border-white/15
+          flex
+          items-center
+          justify-center
+          transition
+          hover:border-cyan-400/40
+          "
+          >
+          {session?.data?.user?.image ? (
+          <img
+          src={session.data.user.image}
+          alt="Profile"
+          className="w-full h-full object-cover"
+          />
+          ) : (
+          <User size={18} className="text-white/80" />
+          )}
+          </button>
 
           </div>
 
@@ -335,22 +356,31 @@ export default function UniversalNav() {
 
               </div>
 
-              <button
-                onClick={handleProfileClick}
-                className="
-                  flex
-                  items-center
-                  gap-3
+          <button
+          onClick={handleProfileClick}
+          className="
+          flex
+          items-center
+          gap-3
+          text-white/80
+          hover:text-cyan-300
+          transition-colors
+          "
+          >
+          <div className="w-9 h-9 rounded-full overflow-hidden border border-white/20 bg-white/10 flex items-center justify-center">
+          {session?.data?.user?.image ? (
+          <img
+          src={session.data.user.image}
+          alt="Profile"
+          className="w-full h-full object-cover"
+          />
+          ) : (
+          <User size={18} />
+          )}
+          </div>
 
-                  text-white/80
-
-                  hover:text-cyan-300
-                  transition-colors
-                "
-              >
-                <User size={18} />
-                <span>Profile</span>
-              </button>
+          <span>Profile</span>
+          </button>
 
             </div>
           </div>

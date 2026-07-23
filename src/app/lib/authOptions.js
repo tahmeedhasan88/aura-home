@@ -48,15 +48,17 @@ export const authOptions = {
   async authorize(credentials) {
     try {
       const user = await loginUser(credentials);
-
+console.log("Authorize User:", user);
       if (!user) return null;
 
       return {
-        id: user._id?.toString?.() || user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
+      id: user._id?.toString?.() || user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      image: user.image || "",
       };
+
     } catch (err) {
       console.error("Authorize Error:", err);
       return null;
@@ -69,16 +71,20 @@ export const authOptions = {
 
   callbacks: {
     async jwt({ token, user }) {
-      if (user) {
-        token.role = user.role;
-      }
-      return token;
+    if (user) {
+    token.role = user.role;
+    token.image = user.image;
+    }
+
+    return token;
     },
     async session({ session, token }) {
-      if (session?.user) {
-        session.user.role = token.role;
-      }
-      return session;
+    if (session?.user) {
+    session.user.role = token.role;
+    session.user.image = token.image;
+    }
+
+    return session;
     },
   },
 };

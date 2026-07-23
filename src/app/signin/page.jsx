@@ -31,7 +31,7 @@ export default function SignInPage() {
     redirect: false,
   });
 
-  console.log(result);
+  // console.log(result);
 
   if (result?.error) {
     toast.error(result.error);

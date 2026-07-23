@@ -14,7 +14,7 @@ const Banner = () => {
 
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <Image
+          <Image 
             src="/bnrimg.png"
             alt="AuraHome Luxury Living Room"
             fill

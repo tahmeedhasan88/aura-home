@@ -1,13 +1,24 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import NavAuthButton from '../Components/Buttons/NavAuthButton';
 
 export default function NavBarHm() {
   const [open, setOpen] = useState(false);
+  const [fixed, setFixed] = useState(true);
+
+useEffect(() => {
+  const handleScroll = () => {
+    setFixed(window.scrollY < 1200);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
 
   const navLinks = [
     { name: 'Home', href: '/' },
@@ -17,9 +28,12 @@ export default function NavBarHm() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-[100] px-4 md:px-8 pt-4">
-
-      <div className="max-w-7xl mx-auto">
+    <nav
+  className={`w-full z-[100] px-2 sm:px-3 md:px-5 lg:px-8 pt-3 ${
+    fixed ? "fixed top-0 left-0" : "absolute top-[400px] left-0"
+  }`}
+>
+  <div className="mx-auto max-w-screen-2xl">
 
         <div
           className="

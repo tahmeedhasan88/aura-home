@@ -1,7 +1,7 @@
 import PropertyDetails from "./PropertyDetails";
 
 export async function generateMetadata({ params }) {
-  const res = await fetch("http://localhost:3000/about/homedetails.json", {
+  const res = await fetch("https://aura-home-one.vercel.app/homedetails.json", {
     cache: "no-store",
   });
 
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title: home.name,
       description: home.fullDescription,
-      url: `http://localhost:3000/about/homes/${home.id}`,
+      url: `https://aura-home-one.vercel.app/homes/${home.id}`,
 
       images: [
         {
